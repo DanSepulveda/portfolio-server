@@ -4,9 +4,15 @@ const config = require("../../../config/config");
 const crypto = require("crypto");
 
 /**
- * dasdada
+ * User model methods
  */
 class UserMethods {
+  /**
+   * Constructor to generate User methods
+   */
+  constructor() {
+    this.methods = {generateJWT: this.generateJWT};
+  }
   /**
    * Generates a json web token for a user
    * @return {string} jwt generated
@@ -36,14 +42,6 @@ class UserMethods {
       .pbkdf2Sync(this.password, this.salt, 10000, 512, "sha512")
       .toString("hex");
     next();
-  }
-
-  /**
-   * Return instance methods
-   * @return {object}
-   */
-  getMethods() {
-    return {generateJWT: this.generateJWT};
   }
 }
 

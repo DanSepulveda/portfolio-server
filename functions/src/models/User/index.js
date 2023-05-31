@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 const {Schema, model} = require("mongoose");
-const methods = require("./methods");
+const userMethods = require("./methods");
 
 const userSchema = new Schema(
   {
@@ -13,11 +13,11 @@ const userSchema = new Schema(
   },
   {
     timestamps: true,
-    methods: methods.getMethods(),
+    methods: userMethods.methods,
   },
 );
 
-userSchema.pre("validate", methods.hashPass);
+userSchema.pre("validate", userMethods.hashPass);
 
 const User = model("project", userSchema);
 
