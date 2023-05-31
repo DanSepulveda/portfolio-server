@@ -30,12 +30,20 @@ class UserMethods {
    * Saves salt and hashed password in instance of User
    * @param {int} next next function
    */
-  preValidate(next) {
+  hashPass(next) {
     this.salt = crypto.randomBytes(16).toString("hex");
     this.password = crypto
       .pbkdf2Sync(this.password, this.salt, 10000, 512, "sha512")
       .toString("hex");
     next();
+  }
+
+  /**
+   * Return instance methods
+   * @return {object}
+   */
+  getMethods() {
+    return {generateJWT: this.generateJWT};
   }
 }
 
