@@ -1,4 +1,4 @@
-const apiRoutes = require("./src/routes");
+const apiRoutes = require("../src/routes");
 
 module.exports.setRoutes = (app) => {
   app.get("/", (req, res) => {
