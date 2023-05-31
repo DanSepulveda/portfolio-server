@@ -1,8 +1,12 @@
 /* eslint-disable indent */
 const jwt = require("jsonwebtoken");
 const config = require("../../../config/config");
+const crypto = require("crypto");
 
-const methods = {
+/**
+ * dasdada
+ */
+class UserMethods {
   /**
    * Generates a json web token for a user
    * @return {string} jwt generated
@@ -20,7 +24,19 @@ const methods = {
       config.JWT_SECRET,
       {expiresIn: "1 day"},
     );
-  },
-};
+  }
 
-module.exports = {methods};
+  /**
+   * Saves salt and hashed password in instance of User
+   * @param {int} next next function
+   */
+  preValidate(next) {
+    this.salt = crypto.randomBytes(16).toString("hex");
+    this.password = crypto
+      .pbkdf2Sync(this.password, this.salt, 10000, 512, "sha512")
+      .toString("hex");
+    next();
+  }
+}
+
+module.exports = new UserMethods();
